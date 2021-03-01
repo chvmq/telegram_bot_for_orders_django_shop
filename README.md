@@ -1,0 +1,3 @@
+# Telegram bot for tracking new orders in django shop
+
+in progres ...

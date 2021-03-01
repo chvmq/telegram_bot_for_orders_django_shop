@@ -1,0 +1,6 @@
+database.db
+var_env.sh
+__pycache__/
+.idea/
+env/
+
