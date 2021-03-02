@@ -1,14 +1,16 @@
 import sqlite3 as sql
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 
-def get_connect():
+def get_connect() -> Tuple:
+    """Соеденение с базой данных"""
     conn = sql.connect('database.db')
     cursor = conn.cursor()
     return conn, cursor
 
 
 def create_db() -> None:
+    """Создаёт БД"""
     conn, cursor = get_connect()
     with open('create_db.sql', 'r') as f:
         query = f.read()
@@ -19,13 +21,15 @@ def create_db() -> None:
             print('Что то пошло не так', ex)
 
 
-def get_tables():
+def get_tables() -> List:
+    """Получает название таблиц из базы данных"""
     conn, cursor = get_connect()
     cursor.execute("select name from sqlite_master where type='table';")
     return cursor.fetchall()
 
 
 def insert(table: str, column_values: Dict):
+    """Добавляет поля в таблицу"""
     conn, cursor = get_connect()
     columns = ', '.join(column_values.keys())
     values = [tuple(column_values.values())]
@@ -39,6 +43,7 @@ def insert(table: str, column_values: Dict):
 
 
 def delete(table: str, row_id: int) -> None:
+    """Удаляет поля из таблицы по идентификатору"""
     row_id = int(row_id)
     cursor = get_connect()[1]
     cursor.execute(f'delete from {table} where id={row_id}')
@@ -53,6 +58,7 @@ def check_db_exists():
 
 
 def get_latest_orders() -> List:
+    """Получает последние заказы из бд, сортированые по дате заказа"""
     conn, cursor = get_connect()
     query = f"""
     SELECT o.id, first_name, last_name, c.final_price
@@ -64,6 +70,7 @@ def get_latest_orders() -> List:
 
 
 def get_order_detail(customer_id: int) -> List:
+    """Получает данные одного заказа"""
     conn, cursor = get_connect()
     query = f"""
     SELECT o.first_name, o.last_name, p.title, c.total_products, c.final_price

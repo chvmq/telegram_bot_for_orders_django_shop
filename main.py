@@ -20,7 +20,9 @@ def get_latest_orders_view(message) -> None:
 
 @bot.message_handler(commands='Заказ')
 def get_order_detail_view(message) -> None:
-    customer_id = 1
+    customer_id: int
+    customer_id = int(''.join([i for i in message.text if str(i).isdigit()]))
+
     get_order_detail_handler(message.chat.id, customer_id)
 
 

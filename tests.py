@@ -1,5 +1,9 @@
 import db
 
+"""
+Данные для базы данных для тестирования
+"""
+
 dict_product_1 = {'id': 0, 'title': 'Macbook13', 'cart_id': 0}
 dict_product_2 = {'id': 1, 'title': 'Iphone12', 'cart_id': 1}
 dict_product_21 = {'id': 2, 'title': 'Iphone12', 'cart_id': 1}
